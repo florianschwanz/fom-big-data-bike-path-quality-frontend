@@ -1,6 +1,7 @@
 {
   "hosting": [
     {
+      "target": "fom-big-data-bike-path-quality-frontend",
       "public": "dist/fom-big-data-bike-path-quality-frontend",
       "ignore": [
         "firebase.json",
