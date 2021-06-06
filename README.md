@@ -1,27 +1,51 @@
-# FomBigDataBikePathQualityFrontend
+[![Issues](https://img.shields.io/github/issues/florianschwanz/fom-big-data-bike-path-quality-frontend)](https://github.com/florianschwanz/fom-big-data-bike-path-quality-frontend/issues)
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.0.1.
+<br />
+<p align="center">
+  <a href="https://github.com/florianschwanz/fom-big-data-bike-path-quality-frontend">
+    <img src="./logo.png" alt="Logo" width="80" height="80">
+  </a>
 
-## Development server
+  <h1 align="center">Bike Path Quality (Alpaka)</h1>
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+  <p align="center">
+    Angular based web app that presents bike path quality analysis results 
+  </p>
+</p>
 
-## Code scaffolding
+## About The Project
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+tbd
 
-## Build
+### Built With
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+* [Angular](https://angular.io/)
 
-## Running unit tests
+## Installation
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+tbd
 
-## Running end-to-end tests
+## Usage
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+tbd
 
-## Further help
+## Roadmap
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+See the [open issues](https://github.com/florianschwanz/fom-big-data-bike-path-quality-frontend/issues) for a list of proposed features (and
+ known issues).
+
+## Contributing
+
+Since this project is part of an ongoing Master's thesis contributions are not possible as for now.
+
+## License
+
+Distributed under the AGPLv3 License. See [LICENSE.md](./LICENSE.md) for more information.
+
+## Contact
+
+Florian Schwanz - florian.schwanz@gmail.com
+
+## Acknowledgements
+
+Icon made by Freepik from www.flaticon.com
