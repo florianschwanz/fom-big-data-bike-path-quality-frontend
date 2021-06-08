@@ -1,0 +1,16 @@
+{
+  "hosting": {
+    "public": "dist/fom-big-data-bike-path-quality-frontend",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}
