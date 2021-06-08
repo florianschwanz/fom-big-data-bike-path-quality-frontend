@@ -10,21 +10,33 @@
   <h1 align="center">Bike Path Quality (Alpaka)</h1>
 
   <p align="center">
-    Angular based web app that presents bike path quality analysis results 
+    Angular based web app that presents <a href="https://github.com/florianschwanz/fom-big-data-bike-path-quality-model" target="_blank">bike path quality analysis</a> results 
   </p>
 </p>
 
 ## About The Project
 
-tbd
+The aim of this app is to visualize the results of a bike path analysis on a map.
+The latest version of this web app is available on https://bike-path-quality.web.app/.
 
 ### Built With
 
 * [Angular](https://angular.io/)
+* [Mapbox](https://www.mapbox.com/)
 
 ## Installation
 
-tbd
+Insall all packages by running
+
+```
+npm install
+```
+
+You can start the app locally by running
+
+```
+npm run start
+```
 
 ## Usage
 
