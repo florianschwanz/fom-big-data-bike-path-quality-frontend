@@ -1,3 +1,4 @@
+[![Build](https://github.com/florianschwanz/fom-big-data-bike-path-quality-frontend/actions/workflows/build-app-workflow.yml/badge.svg?branch=main)](https://github.com/florianschwanz/fom-big-data-bike-path-quality-frontend/actions/workflows/build-app-workflow.yml)
 [![Issues](https://img.shields.io/github/issues/florianschwanz/fom-big-data-bike-path-quality-frontend)](https://github.com/florianschwanz/fom-big-data-bike-path-quality-frontend/issues)
 
 <br />
