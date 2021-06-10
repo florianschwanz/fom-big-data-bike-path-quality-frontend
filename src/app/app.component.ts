@@ -1,10 +1,15 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 
+/**
+ * Displays app component
+ */
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'fom-big-data-bike-path-quality-frontend';
+
+  /** Title */
+  title = 'Bike Path Quality';
 }
