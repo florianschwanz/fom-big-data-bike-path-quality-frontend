@@ -1,14 +1,4 @@
-import {
-  AfterViewInit,
-  ChangeDetectionStrategy,
-  Component,
-  ElementRef,
-  Inject,
-  Input,
-  OnChanges,
-  SimpleChanges,
-  ViewChild
-} from '@angular/core';
+import {AfterViewInit, ChangeDetectionStrategy, Component, Inject, Input, OnChanges, SimpleChanges} from '@angular/core';
 import * as mapboxgl from 'mapbox-gl';
 import {environment} from '../../../../environments/environment';
 import {Place} from '../../../core/mapbox/model/place.model';
@@ -18,9 +8,9 @@ import {HttpClient} from '@angular/common/http';
 import {MatSliderChange} from '@angular/material/slider';
 import {Subject} from 'rxjs';
 import {BoundingBox} from '../model/bounding-box.model';
-import {ColorRamp} from '../model/color-ramp.model';
 import {DOCUMENT} from '@angular/common';
 import {UUID} from '../model/uuid.model';
+import {Overlay} from '../model/overlay.model';
 
 /**
  * Displays a map box
@@ -94,36 +84,8 @@ export class MapComponent implements OnChanges, AfterViewInit {
   /** List of flyable location */
   @Input() flyableLocations: Location[] = [];
 
-  /** List of results to be displayed  */
-  @Input() results: string[] = [];
-  /** List of results to be displayed as hexagons */
-  @Input() hexResults: string[] = [];
-
-  /** Hexagon edge size in km */
-  @Input() cellSize = 0.5;
-  /** Property to use aggregate data from */
-  @Input() hexAggregateProperty = 'mean_spatial_distance_60min';
-  /** Color ramp */
-  @Input() hexColorRamp = ColorRamp.LUFTDATEN_COLOR_RAMP;
-  /** Number of points that must be in hexagon to be created */
-  @Input() hexBinLimit = 0;
-  /** Value of a point that must exceeded to be counted for hexagon */
-  @Input() hexBinThreshold = 0;
-  /** Whether or not each layer should have an individual scale */
-  @Input() individualScale = false;
-
-  /** Whether to a map legend should show as gradient or not */
-  @Input() legendGradient = true;
-  /** Multi legend gradient */
-  @Input() multiLegendGradient = new Map<string, boolean>();
-  /** Whether to a map legend should show as gradient or not */
-  @Input() multiLegend = false;
-  /** Map of Colors and Values for Map Legend */
-  @Input() legendContents = new Map<string, string>();
-  /** Map of Colors and Values for Map Legend */
-  @Input() multiLegendContents = new Map<string, Map<string, string>>();
-  /** Legend component */
-  @ViewChild('legend') legend: ElementRef;
+  /** List of overlays to be displayed  */
+  @Input() overlays: Overlay[] = [];
 
   /** Opacity of active marker */
   @Input() opacityActive = 1.0;
@@ -147,8 +109,6 @@ export class MapComponent implements OnChanges, AfterViewInit {
 
   /** List of currently displayed markers */
   private currentMarkers = [];
-  /** List of currently displayed pop-up markers */
-  private currentPopUpMarkers = [];
 
   /**
    * Constructor
@@ -173,10 +133,6 @@ export class MapComponent implements OnChanges, AfterViewInit {
       });
     }
 
-    if (this.map != null && this.popupMarkers != null) {
-      this.initializePopupMarkers(this.popupMarkers);
-    }
-
     if (this.flyToLocation != null) {
       this.flyableLocationSubject.next(this.flyToLocation);
     }
@@ -193,8 +149,6 @@ export class MapComponent implements OnChanges, AfterViewInit {
 
     // Initialize markers
     this.initializeMarkers(this.markers);
-    this.initializeClickableMarkers(this.clickableMarkers);
-    this.initializePopupMarkers(this.popupMarkers);
 
     // Initialize controls
     this.initializeNavigationControl(this.navigationControlEnabled);
@@ -212,8 +166,7 @@ export class MapComponent implements OnChanges, AfterViewInit {
     this.initializeFlyTo();
 
     // Display overlays
-    this.initializeResultOverlays(this.results);
-    this.initializeResultOverlays(this.hexResults);
+    this.initializeOverlays(this.overlays);
   }
 
   //
@@ -266,97 +219,6 @@ export class MapComponent implements OnChanges, AfterViewInit {
         .setLngLat([marker.longitude, marker.latitude])
         .addTo(this.map);
       this.currentMarkers.push(m);
-    });
-  }
-
-  /**
-   * Initializes clickable markers that will center the viewport on click
-   * @param clickableMarkers clickable markers
-   */
-  private initializeClickableMarkers(clickableMarkers: Location[]) {
-    this.map.on('load', () => {
-      this.map.loadImage(
-        'https://docs.mapbox.com/mapbox-gl-js/assets/custom_marker.png',
-        (error, image) => {
-          if (error) {
-            throw error;
-          }
-          this.map.addImage('custom-marker', image);
-          this.map.addSource('points', {
-            type: 'geojson',
-            data: {
-              type: 'FeatureCollection',
-              features: clickableMarkers.map(marker => {
-                return {
-                  type: 'Feature',
-                  properties: {},
-                  geometry: {
-                    type: 'Point',
-                    coordinates: [
-                      marker.longitude,
-                      marker.latitude
-                    ]
-                  }
-                };
-              })
-            }
-          });
-          this.map.addLayer({
-            id: 'symbols',
-            type: 'symbol',
-            source: 'points',
-            layout: {
-              'icon-image': 'custom-marker'
-            }
-          });
-
-          // Handle click event
-          this.map.on('click', 'symbols', e => {
-            this.map.flyTo({
-              // @ts-ignore
-              center: e.features[0].geometry.coordinates
-            });
-          });
-
-          // Change the cursor to a pointer when the it enters a feature in the 'symbols' layer.
-          this.map.on('mouseenter', 'symbols', () => {
-            this.map.getCanvas().style.cursor = 'pointer';
-          });
-
-          // Change it back to a pointer when it leaves.
-          this.map.on('mouseleave', 'symbols', () => {
-            this.map.getCanvas().style.cursor = '';
-          });
-        });
-    });
-  }
-
-  /**
-   * Initializes markers that will open a pop-up on click
-   * @param popupMarkers pop-up markers
-   */
-  private initializePopupMarkers(popupMarkers: Location[]) {
-
-    this.currentPopUpMarkers.forEach(marker => {
-      marker.remove();
-    });
-
-    popupMarkers.forEach(marker => {
-      // Create the popup
-      const popup = new mapboxgl.Popup({offset: 25}).setText(
-        marker.description
-      );
-
-      // Create DOM element for the marker
-      const el = document.createElement('div');
-      el.id = `marker-${marker.name.toLowerCase()}`;
-
-      // Create the marker
-      const m = new mapboxgl.Marker(el)
-        .setLngLat([marker.longitude, marker.latitude])
-        .setPopup(popup)
-        .addTo(this.map);
-      this.currentPopUpMarkers.push(m);
     });
   }
 
@@ -474,13 +336,105 @@ export class MapComponent implements OnChanges, AfterViewInit {
   }
 
   /**
-   * Initializes results overlays
+   * Initializes overlays
    *
-   * @param results results
+   * @param overlays overlays
    */
-  private initializeResultOverlays(results: string[]) {
+  private initializeOverlays(overlays: Overlay[]) {
     this.map.on('load', () => {
+
+      // Base URL for overlays
+      const baseUrl = environment.github.resultsUrl;
+
+      overlays.forEach(overlay => {
+
+        // Add source
+        this.map.addSource(overlay.source,
+          {
+            type: 'geojson',
+            data: baseUrl + overlay.source + '.geojson'
+          }
+        );
+
+        console.log(`FOOBAR ${baseUrl + overlay.layer + '.json'}`);
+
+        // Download styling for result
+        this.http.get(baseUrl + overlay.layer + '.json', {responseType: 'text' as 'json'}).subscribe((data: any) => {
+          this.initializeLayer(overlay.source, data);
+        });
+      });
     });
+  }
+
+  /**
+   * Initializes a layer
+   * @param name name
+   * @param data data
+   */
+  private initializeLayer(name: string, data: any) {
+
+    console.log(`FOOBAR ${JSON.stringify(data)}`);
+
+    // Link layer to source
+    const layer = JSON.parse(data);
+    layer['id'] = name + '-layer';
+    layer['source'] = name;
+
+    // Get ID of first layer which contains labels
+    const firstSymbolId = this.getFirstLayerWithLabels(this.map);
+
+    // Remove layer
+    if (this.map.getLayer(layer['id'])) {
+      this.map.removeLayer(layer['id']);
+    }
+
+    // Add layer
+    this.map.addLayer(layer, firstSymbolId);
+
+    // Initialize layer transparency
+    if (layer['paint'].hasOwnProperty('fill-color')) {
+      this.map.setPaintProperty(layer['id'], 'fill-opacity', this.initialOpacity / 100);
+    }
+    if (layer['paint'].hasOwnProperty('line-color')) {
+      this.map.setPaintProperty(layer['id'], 'line-opacity', this.initialOpacity / 100);
+    }
+    if (layer['paint'].hasOwnProperty('heatmap-color')) {
+      this.map.setPaintProperty(layer['id'], 'heatmap-opacity', this.initialOpacity / 100);
+    }
+    if (layer['paint'].hasOwnProperty('circle-color')) {
+      this.map.setPaintProperty(layer['id'], 'circle-opacity', this.initialOpacity / 100);
+    }
+
+    // Update layer transparency
+    this.opacitySubject.subscribe((e: { name, value }) => {
+      const layerId = e.name + '-layer';
+
+      if (layer.id === layerId) {
+        if (layer['paint'].hasOwnProperty('fill-color')) {
+          this.map.setPaintProperty(layerId, 'fill-opacity', e.value / 100);
+        }
+        if (layer['paint'].hasOwnProperty('line-color')) {
+          this.map.setPaintProperty(layerId, 'line-opacity', e.value / 100);
+        }
+        if (layer['paint'].hasOwnProperty('heatmap-color')) {
+          this.map.setPaintProperty(layerId, 'heatmap-opacity', e.value / 100);
+        }
+        if (layer['paint'].hasOwnProperty('circle-color')) {
+          this.map.setPaintProperty(layerId, 'circle-opacity', e.value / 100);
+        }
+      }
+    });
+
+    // Check if debug mode is enabled
+    if (this.debug) {
+      this.map.on('click', name + '-layer', (e) => {
+        new mapboxgl.Popup()
+          .setLngLat(e.lngLat)
+          .setHTML(`value ${e.features[0]
+            .properties['max_spatial_distance_15min']} / coords ${e.features[0].geometry['coordinates']}`)
+          .addTo(this.map);
+      });
+    }
   }
 
   /**
@@ -586,5 +540,26 @@ export class MapComponent implements OnChanges, AfterViewInit {
   onResetClicked() {
     const initialLocation = new Location('init', '', this.zoom, this.center.longitude, this.center.latitude);
     this.flyableLocationSubject.next(initialLocation);
+  }
+
+  //
+  // Helpers
+  //
+
+  /**
+   * Gets ID of first layer containing symbols
+   * @param map map
+   */
+  private getFirstLayerWithLabels(map): string {
+    const layers = map.getStyle().layers;
+    let firstSymbolId = '';
+    // Find the index of the first symbol layer in the map style
+    layers.forEach((_, index) => {
+      if (firstSymbolId === '' && layers[index].type === 'symbol') {
+        firstSymbolId = layers[index].id;
+      }
+    });
+
+    return firstSymbolId;
   }
 }
