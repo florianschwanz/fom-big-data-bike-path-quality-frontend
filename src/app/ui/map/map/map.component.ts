@@ -356,8 +356,6 @@ export class MapComponent implements OnChanges, AfterViewInit {
           }
         );
 
-        console.log(`FOOBAR ${baseUrl + overlay.layer + '.json'}`);
-
         // Download styling for result
         this.http.get(baseUrl + overlay.layer + '.json', {responseType: 'text' as 'json'}).subscribe((data: any) => {
           this.initializeLayer(overlay.source, data);
@@ -372,8 +370,6 @@ export class MapComponent implements OnChanges, AfterViewInit {
    * @param data data
    */
   private initializeLayer(name: string, data: any) {
-
-    console.log(`FOOBAR ${JSON.stringify(data)}`);
 
     // Link layer to source
     const layer = JSON.parse(data);
