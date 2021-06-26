@@ -3,7 +3,10 @@ import {MapBoxStyle} from '../../../../core/mapbox/model/map-box-style.enum';
 import {Place} from '../../../../core/mapbox/model/place.model';
 import {Overlay} from '../../../../ui/map/model/overlay.model';
 import {FirebaseCloudFirestoreService} from '../../../../core/firebase/services/firebase-cloud-firestore.service';
-import {BikeActivityMetaDataEnvelope} from '../../../../core/firebase/model/bike-activity-meta-data-envelope.model';
+import {BikeActivityMetadataEnvelope} from '../../../../core/firebase/model/bike-activity-metadata-envelope.model';
+import {DomSanitizer} from '@angular/platform-browser';
+import {MatIconRegistry} from '@angular/material/icon';
+import {MaterialIconService} from '../../../../core/ui/services/material-icon.service';
 
 /**
  * Displays a dashboard
@@ -23,13 +26,23 @@ export class DashboardComponent implements OnInit {
   /** Enum representing map box style */
   mapBoxStyleEnum = MapBoxStyle;
 
-  /** List of bike activity metadata */
-  bikeActivityMetadataMap = new Map<string, BikeActivityMetaDataEnvelope>();
+  /** Map of bike activity metadata */
+  bikeActivityMetadataMap = new Map<string, BikeActivityMetadataEnvelope>();
 
   /** List of overlays to be displayed */
   overlays: Overlay[] = [];
 
-  constructor(private firebaseCloudFirestoreService: FirebaseCloudFirestoreService) {
+  /**
+   * Constructor
+   * @param firebaseCloudFirestoreService Firebase Cloud Firestore service
+   * @param iconRegistry Material icon registry
+   * @param materialIconService Material icon service
+   * @param sanitizer DOM sanitizer
+   */
+  constructor(private firebaseCloudFirestoreService: FirebaseCloudFirestoreService,
+              private iconRegistry: MatIconRegistry,
+              private materialIconService: MaterialIconService,
+              private sanitizer: DomSanitizer) {
   }
 
   //
@@ -41,10 +54,7 @@ export class DashboardComponent implements OnInit {
    */
   ngOnInit() {
     this.initializeCloudFirestoreSubscription();
-
-    // this.measurementsOverlays.forEach(measurement => {
-    //   this.overlays.push(new Overlay(`measurements/geojson/${measurement.replace('.geojson', '')}`, 'measurements/styles/style'));
-    // });
+    this.initializeMaterial();
 
     this.firebaseCloudFirestoreService.readResults();
   }
@@ -59,16 +69,29 @@ export class DashboardComponent implements OnInit {
   private initializeCloudFirestoreSubscription() {
     this.firebaseCloudFirestoreService.resultsSubject.subscribe(results => {
       results.forEach(result => {
-        this.initializeOverlays(result.name, result.payload);
+        this.initializeOverlay(result.name, result.payload);
       });
     });
   }
 
-  private initializeOverlays(name: string, bikeActivityMetadataEnvelope: BikeActivityMetaDataEnvelope) {
-    this.bikeActivityMetadataMap.set(name, bikeActivityMetadataEnvelope);
+  /**
+   * Initializes overlay based on a given bike activity
+   * @param bikeActivityId bike activity ID
+   * @param bikeActivityMetadataEnvelope bike activity metadata envelope
+   */
+  private initializeOverlay(bikeActivityId: string, bikeActivityMetadataEnvelope: BikeActivityMetadataEnvelope) {
+    this.bikeActivityMetadataMap.set(bikeActivityId, bikeActivityMetadataEnvelope);
+    this.bikeActivityMetadataMap = new Map(this.bikeActivityMetadataMap);
 
     Array.from(this.bikeActivityMetadataMap.keys()).forEach(bikeActivityUid => {
       this.overlays.push(new Overlay(`data/measurements/geojson/${bikeActivityUid}`, 'data/measurements/styles/style'));
     });
+  }
+
+  /**
+   * Initializes material colors and icons
+   */
+  private initializeMaterial() {
+    this.materialIconService.initializeIcons(this.iconRegistry, this.sanitizer);
   }
 }
