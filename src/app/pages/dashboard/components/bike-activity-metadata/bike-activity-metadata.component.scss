@@ -1,0 +1,29 @@
+@import '../../../../../theme';
+
+.container {
+  cursor: pointer;
+  margin: -16px;
+  padding: 16px;
+}
+
+.title {
+  font-size: 18px;
+}
+
+.subtitle {
+  color: mat-color($mat-grey, 500);
+}
+
+.bike-icon {
+  ::ng-deep svg {
+    fill: mat-color($mat-grey, 500);
+
+    height: 60%;
+    width: 60%;
+  }
+}
+
+.delimiter {
+  padding-left: 4px;
+  padding-right: 4px;
+}
