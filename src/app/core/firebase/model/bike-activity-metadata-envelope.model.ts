@@ -1,7 +1,7 @@
 /**
- * Represents a result of an analysis
+ * Represents the metadata of a bike activity
  */
-export class BikeActivityMetaDataEnvelope {
+export class BikeActivityMetadataEnvelope {
 
   /**
    * Constructor
@@ -12,6 +12,9 @@ export class BikeActivityMetaDataEnvelope {
   }
 }
 
+/**
+ * Represents a bike activity
+ */
 export class BikeActivity {
 
   /**
@@ -29,6 +32,9 @@ export class BikeActivity {
   }
 }
 
+/**
+ * Represents user data
+ */
 export class UserData {
 
   /**
