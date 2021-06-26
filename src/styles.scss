@@ -1,4 +1,18 @@
-/* You can add global styles to this file, and also import other style files */
+// Theme
+@import '~@angular/material/theming';
+
+@include mat-core();
+@import 'theme.scss';
+@import 'sizes.scss';
+
+.light-theme {
+  @include angular-material-theme($light-theme);
+}
+
+.dark-theme {
+  @include angular-material-theme($dark-theme);
+}
+
 html, body {
   height: 100%;
   scroll-behavior: smooth;
@@ -9,7 +23,6 @@ body {
   color: #111;
   width: 100%;
   min-height: 100%;
-  //min-height: 200vh;
   font-family: Merriweather, serif;
   line-height: 1.5em;
   overflow-x: hidden;
@@ -46,10 +59,6 @@ h3 {
 
 *:focus {
   outline: none;
-}
-
-.app-header {
-  z-index: 100;
 }
 
 .mapboxgl-map {
