@@ -1,6 +1,7 @@
 <mat-card class="card-overlay">
   <mat-card-subtitle>Bike Activities</mat-card-subtitle>
   <app-bike-activity-metadata *ngFor="let bikeActivityMetadata of bikeActivitiesMetadata"
-                              [bikeActivityMetadata]="bikeActivityMetadata">
+                              [bikeActivityMetadata]="bikeActivityMetadata"
+                              (bikeActivityClickedEventEmitter)="onBikeActivityClicked($event)">
   </app-bike-activity-metadata>
 </mat-card>

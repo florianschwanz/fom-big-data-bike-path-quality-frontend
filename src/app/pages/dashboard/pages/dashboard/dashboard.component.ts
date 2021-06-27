@@ -94,4 +94,15 @@ export class DashboardComponent implements OnInit {
   private initializeMaterial() {
     this.materialIconService.initializeIcons(this.iconRegistry, this.sanitizer);
   }
+
+  //
+  // Actions
+  //
+
+  /**
+   * Handles click on activity
+   */
+  onBikeActivityClicked(bikeActivityUid: string) {
+    console.log(`bikeActivityUid ${bikeActivityUid}`);
+  }
 }

@@ -7,4 +7,5 @@
          [overlays]="overlays">
 </app-map>
 
-<app-map-overlay [bikeActivityMetadataMap]="bikeActivityMetadataMap"></app-map-overlay>
+<app-map-overlay [bikeActivityMetadataMap]="bikeActivityMetadataMap"
+                 (bikeActivityClickedEventEmitter)="onBikeActivityClicked($event)"></app-map-overlay>

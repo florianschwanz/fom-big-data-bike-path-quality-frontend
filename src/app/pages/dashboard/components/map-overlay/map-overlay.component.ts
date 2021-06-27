@@ -35,4 +35,15 @@ export class MapOverlayComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges) {
     this.bikeActivitiesMetadata = Array.from(this.bikeActivityMetadataMap.values());
   }
+
+  //
+  // Actions
+  //
+
+  /**
+   * Handles click on activity
+   */
+  onBikeActivityClicked(bikeActivityUid: string) {
+    this.bikeActivityClickedEventEmitter.emit(bikeActivityUid);
+  }
 }
