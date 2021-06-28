@@ -78,40 +78,6 @@ export class BikeActivityMetadataComponent implements OnInit {
    * Handles click on activity
    */
   onBikeActivityClicked() {
-    const uid = this.bikeActivityMetadata.bikeActivity.uid;
-    const uidString = this.toUuidString(uid.leastSignificantBits, uid.mostSignificantBits);
-
-    this.bikeActivityClickedEventEmitter.emit(uidString);
-  }
-
-  //
-  // Helpers
-  //
-
-  /**
-   * Creates a UUID from least-significant bits and most-significant bits
-   * @see https://stackoverflow.com/a/66304548
-   *
-   * @param lsb least-significant bits
-   * @param msb most-significant bits
-   */
-  toUuidString(lsb: bigint, msb: bigint): string {
-    // @ts-ignore
-    // tslint:disable-next-line:no-bitwise
-    return `${this.digits(BigInt(msb) >> 32n, 8n)}-${this.digits(BigInt(msb) >> 16n, 4n)}-${this.digits(BigInt(msb), 4n)}-${this.digits(BigInt(lsb) >> 48n, 4n)}-${this.digits(BigInt(lsb), 12n)}`;
-  }
-
-  /**
-   * Creates digits from a big integer
-   * @param val value
-   * @param digits digits
-   */
-  digits(val: bigint, digits: bigint): string {
-    // @ts-ignore
-    // tslint:disable-next-line:no-bitwise
-    const hi = 1n << (digits * 4n);
-    // @ts-ignore
-    // tslint:disable-next-line:no-bitwise
-    return (hi | (val & (hi - 1n))).toString(16).substring(1);
+    this.bikeActivityClickedEventEmitter.emit(this.bikeActivityMetadata.bikeActivity.uid);
   }
 }

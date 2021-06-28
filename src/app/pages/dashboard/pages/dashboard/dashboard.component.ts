@@ -29,6 +29,8 @@ export class DashboardComponent implements OnInit {
   /** Map of bike activity metadata */
   bikeActivityMetadataMap = new Map<string, BikeActivityMetadataEnvelope>();
 
+  /** Opacities */
+  opacities = new Map<string, number>();
   /** List of overlays to be displayed */
   overlays: Overlay[] = [];
 
@@ -85,6 +87,8 @@ export class DashboardComponent implements OnInit {
 
     Array.from(this.bikeActivityMetadataMap.keys()).forEach(bikeActivityUid => {
       this.overlays.push(new Overlay(`data/measurements/geojson/${bikeActivityUid}`, 'data/measurements/styles/style'));
+      this.opacities.set(bikeActivityUid, 0.0);
+      this.opacities = new Map(this.opacities);
     });
   }
 
@@ -103,6 +107,12 @@ export class DashboardComponent implements OnInit {
    * Handles click on activity
    */
   onBikeActivityClicked(bikeActivityUid: string) {
-    console.log(`bikeActivityUid ${bikeActivityUid}`);
+    // Reset opacity of all layers
+    this.opacities.forEach((value: number, key: string) => {
+      this.opacities.set(key, 0);
+    });
+
+    this.opacities.set(bikeActivityUid, 100.0);
+    this.opacities = new Map(this.opacities);
   }
 }

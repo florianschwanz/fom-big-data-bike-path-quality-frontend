@@ -127,6 +127,8 @@ export class MapComponent implements OnChanges, AfterViewInit {
    * @param changes changes
    */
   ngOnChanges(changes: SimpleChanges) {
+    this.initializeOverlays(this.overlays);
+
     if (this.opacities != null) {
       this.opacities.forEach((value: number, name: string) => {
         this.opacitySubject.next({name, value});
@@ -341,27 +343,33 @@ export class MapComponent implements OnChanges, AfterViewInit {
    * @param overlays overlays
    */
   private initializeOverlays(overlays: Overlay[]) {
-    this.map.on('load', () => {
+    if (this.map != null) {
+      this.map.on('load', () => {
 
-      // Base URL for overlays
-      const baseUrl = environment.github.resultsUrl;
+        // Base URL for overlays
+        const baseUrl = environment.github.resultsUrl;
 
-      overlays.forEach(overlay => {
+        overlays.forEach(overlay => {
 
-        // Add source
-        this.map.addSource(overlay.source,
-          {
-            type: 'geojson',
-            data: baseUrl + overlay.source + '.geojson'
+          const sourceName = overlay.source.split('/').pop();
+
+          // Add source
+          if (this.map.getSource(sourceName) == null) {
+            this.map.addSource(sourceName,
+              {
+                type: 'geojson',
+                data: baseUrl + overlay.source + '.geojson'
+              }
+            );
+
+            // Download styling for result
+            this.http.get(baseUrl + overlay.layer + '.json', {responseType: 'text' as 'json'}).subscribe((data: any) => {
+              this.initializeLayer(overlay.source, data);
+            });
           }
-        );
-
-        // Download styling for result
-        this.http.get(baseUrl + overlay.layer + '.json', {responseType: 'text' as 'json'}).subscribe((data: any) => {
-          this.initializeLayer(overlay.source, data);
         });
       });
-    });
+    }
   }
 
   /**
@@ -370,11 +378,11 @@ export class MapComponent implements OnChanges, AfterViewInit {
    * @param data data
    */
   private initializeLayer(name: string, data: any) {
-
     // Link layer to source
     const layer = JSON.parse(data);
-    layer['id'] = name + '-layer';
-    layer['source'] = name;
+    const sourceName = name.split('/').pop();
+    layer['id'] = sourceName + '-layer';
+    layer['source'] = sourceName;
 
     // Get ID of first layer which contains labels
     const firstSymbolId = this.getFirstLayerWithLabels(this.map);
@@ -394,11 +402,11 @@ export class MapComponent implements OnChanges, AfterViewInit {
     if (layer['paint'].hasOwnProperty('line-color')) {
       this.map.setPaintProperty(layer['id'], 'line-opacity', this.initialOpacity / 100);
     }
-    if (layer['paint'].hasOwnProperty('heatmap-color')) {
-      this.map.setPaintProperty(layer['id'], 'heatmap-opacity', this.initialOpacity / 100);
-    }
     if (layer['paint'].hasOwnProperty('circle-color')) {
       this.map.setPaintProperty(layer['id'], 'circle-opacity', this.initialOpacity / 100);
+    }
+    if (layer['paint'].hasOwnProperty('heatmap-color')) {
+      this.map.setPaintProperty(layer['id'], 'heatmap-opacity', this.initialOpacity / 100);
     }
 
     // Update layer transparency
@@ -412,11 +420,11 @@ export class MapComponent implements OnChanges, AfterViewInit {
         if (layer['paint'].hasOwnProperty('line-color')) {
           this.map.setPaintProperty(layerId, 'line-opacity', e.value / 100);
         }
-        if (layer['paint'].hasOwnProperty('heatmap-color')) {
-          this.map.setPaintProperty(layerId, 'heatmap-opacity', e.value / 100);
-        }
         if (layer['paint'].hasOwnProperty('circle-color')) {
           this.map.setPaintProperty(layerId, 'circle-opacity', e.value / 100);
+        }
+        if (layer['paint'].hasOwnProperty('heatmap-color')) {
+          this.map.setPaintProperty(layerId, 'heatmap-opacity', e.value / 100);
         }
       }
     });
