@@ -6,9 +6,10 @@ export class BikeActivityMetadataEnvelope {
   /**
    * Constructor
    * @param bikeActivity bike activity
+   * @param bikeActivitySamples number of bike activity samples
    * @param userData payload
    */
-  constructor(public bikeActivity: BikeActivity, public userData: UserData) {
+  constructor(public bikeActivity: BikeActivity, public bikeActivitySamples: number, public userData: UserData) {
   }
 }
 
