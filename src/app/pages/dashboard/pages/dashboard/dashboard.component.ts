@@ -7,6 +7,7 @@ import {BikeActivityMetadataEnvelope} from '../../../../core/firebase/model/bike
 import {DomSanitizer} from '@angular/platform-browser';
 import {MatIconRegistry} from '@angular/material/icon';
 import {MaterialIconService} from '../../../../core/ui/services/material-icon.service';
+import {BoundingBox} from '../../../../ui/map/model/bounding-box.model';
 
 /**
  * Displays a dashboard
@@ -29,6 +30,8 @@ export class DashboardComponent implements OnInit {
   /** Map of bike activity metadata */
   bikeActivityMetadataMap = new Map<string, BikeActivityMetadataEnvelope>();
 
+  /** Fly-to bounding box */
+  flyToBoundingBox: BoundingBox;
   /** Opacities */
   opacities = new Map<string, number>();
   /** List of overlays to be displayed */
@@ -107,11 +110,25 @@ export class DashboardComponent implements OnInit {
    * Handles click on activity
    */
   onBikeActivityClicked(bikeActivityUid: string) {
+
+    // Get metadata envelope of selected bike activity
+    const bikeActivityMetadataEnvelope = this.bikeActivityMetadataMap.get(bikeActivityUid);
+    const bikeActivityBounds = bikeActivityMetadataEnvelope.bikeActivityBounds;
+
+    // Define fly-to bounding box
+    this.flyToBoundingBox = [
+      bikeActivityBounds.lonWest,
+      bikeActivityBounds.latNorth,
+      bikeActivityBounds.lonEast,
+      bikeActivityBounds.latSouth
+    ];
+
     // Reset opacity of all layers
     this.opacities.forEach((value: number, key: string) => {
       this.opacities.set(key, 0);
     });
 
+    // Set opacity of selected bike activity
     this.opacities.set(bikeActivityUid, 100.0);
     this.opacities = new Map(this.opacities);
   }

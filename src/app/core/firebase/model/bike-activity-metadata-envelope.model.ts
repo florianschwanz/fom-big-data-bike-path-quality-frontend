@@ -7,9 +7,13 @@ export class BikeActivityMetadataEnvelope {
    * Constructor
    * @param bikeActivity bike activity
    * @param bikeActivitySamples number of bike activity samples
+   * @param bikeActivityBounds bike activity bounds
    * @param userData payload
    */
-  constructor(public bikeActivity: BikeActivity, public bikeActivitySamples: number, public userData: UserData) {
+  constructor(public bikeActivity: BikeActivity,
+              public bikeActivitySamples: number,
+              public bikeActivityBounds: LatLngBounds,
+              public userData: UserData) {
   }
 }
 
@@ -30,6 +34,28 @@ export class BikeActivity {
               public startTime: any,
               public surfaceType: any,
               public endTime: any) {
+  }
+}
+
+/**
+ * Represents lat/lon bounds
+ */
+export class LatLngBounds {
+
+  constructor(public center: LatLng,
+              public emptySpan: boolean,
+              public latNorth: number,
+              public latSouth: number,
+              public latitudeSpan: number,
+              public lonEast: number,
+              public lonWest: number,
+              public longitudeSpan: number) {
+  }
+}
+
+export class LatLng {
+
+  constructor(public latitude, public longitude) {
   }
 }
 
