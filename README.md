@@ -26,7 +26,7 @@ The latest version of this web app is available on https://bike-path-quality.web
 
 ## Installation
 
-Insall all packages by running
+Install all packages by running
 
 ```
 npm install
