@@ -85,6 +85,9 @@ export class DashboardComponent implements OnInit {
    * @param bikeActivityMetadataEnvelope bike activity metadata envelope
    */
   private initializeOverlay(bikeActivityId: string, bikeActivityMetadataEnvelope: BikeActivityMetadataEnvelope) {
+
+    bikeActivityMetadataEnvelope.bikeActivity.uid = bikeActivityId;
+
     this.bikeActivityMetadataMap.set(bikeActivityId, bikeActivityMetadataEnvelope);
     this.bikeActivityMetadataMap = new Map(this.bikeActivityMetadataMap);
 
