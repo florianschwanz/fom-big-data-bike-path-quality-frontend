@@ -11,20 +11,22 @@ import {MapOverlayComponent} from './components/map-overlay/map-overlay.componen
 import {BikeActivityMetadataComponent} from './components/bike-activity-metadata/bike-activity-metadata.component';
 import {MatIconModule} from '@angular/material/icon';
 import {MatRippleModule} from '@angular/material/core';
+import {ScrollingModule} from '@angular/cdk/scrolling';
 
 @NgModule({
   declarations: [DashboardComponent, MapOverlayComponent, BikeActivityMetadataComponent],
-  imports: [
-    CommonModule,
-    DashboardRoutingModule,
-    MapModule,
-    MatButtonModule,
-    MatCardModule,
-    MatIconModule,
-    MatToolbarModule,
-    MatSlideToggleModule,
-    MatRippleModule
-  ]
+    imports: [
+        CommonModule,
+        DashboardRoutingModule,
+        MapModule,
+        MatButtonModule,
+        MatCardModule,
+        MatIconModule,
+        MatToolbarModule,
+        MatSlideToggleModule,
+        MatRippleModule,
+        ScrollingModule
+    ]
 })
 
 export class DashboardModule {
