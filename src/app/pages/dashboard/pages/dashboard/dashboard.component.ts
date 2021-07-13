@@ -34,6 +34,8 @@ export class DashboardComponent implements OnInit {
   flyToBoundingBox: BoundingBox;
   /** Opacities */
   opacities = new Map<string, number>();
+  /** Initial opacity */
+  initialOpacity = 25;
   /** List of overlays to be displayed */
   overlays: Overlay[] = [];
 
@@ -128,7 +130,7 @@ export class DashboardComponent implements OnInit {
 
     // Reset opacity of all layers
     this.opacities.forEach((value: number, key: string) => {
-      this.opacities.set(key, 0);
+      this.opacities.set(key, this.initialOpacity / 5);
     });
 
     // Set opacity of selected bike activity
