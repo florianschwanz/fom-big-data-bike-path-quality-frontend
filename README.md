@@ -1,16 +1,16 @@
-[![Build](https://github.com/florianschwanz/fom-big-data-bike-path-quality-frontend/actions/workflows/build-app-workflow.yml/badge.svg?branch=main)](https://github.com/florianschwanz/fom-big-data-bike-path-quality-frontend/actions/workflows/build-app-workflow.yml)
-[![Issues](https://img.shields.io/github/issues/florianschwanz/fom-big-data-bike-path-quality-frontend)](https://github.com/florianschwanz/fom-big-data-bike-path-quality-frontend/issues)
+[![Build](https://github.com/fom-big-data-bike-path-quality/fom-big-data-bike-path-quality-frontend/actions/workflows/build-app-workflow.yml/badge.svg?branch=main)](https://github.com/fom-big-data-bike-path-quality/fom-big-data-bike-path-quality-frontend/actions/workflows/build-app-workflow.yml)
+[![Issues](https://img.shields.io/github/issues/fom-big-data-bike-path-quality/fom-big-data-bike-path-quality-frontend)](https://github.com/fom-big-data-bike-path-quality/fom-big-data-bike-path-quality-frontend/issues)
 
 <br />
 <p align="center">
-  <a href="https://github.com/florianschwanz/fom-big-data-bike-path-quality-frontend">
+  <a href="https://github.com/fom-big-data-bike-path-quality/fom-big-data-bike-path-quality-frontend">
     <img src="./logo.png" alt="Logo" width="80" height="80">
   </a>
 
   <h1 align="center">Bike Path Quality (Alpaka)</h1>
 
   <p align="center">
-    Angular based web app that presents <a href="https://github.com/florianschwanz/fom-big-data-bike-path-quality-model" target="_blank">bike path quality analysis</a> results 
+    Angular based web app that presents <a href="https://github.com/fom-big-data-bike-path-quality/fom-big-data-bike-path-quality-model" target="_blank">bike path quality analysis</a> results 
   </p>
 </p>
 
@@ -44,7 +44,7 @@ tbd
 
 ## Roadmap
 
-See the [open issues](https://github.com/florianschwanz/fom-big-data-bike-path-quality-frontend/issues) for a list of proposed features (and
+See the [open issues](https://github.com/fom-big-data-bike-path-quality/fom-big-data-bike-path-quality-frontend/issues) for a list of proposed features (and
  known issues).
 
 ## Contributing
