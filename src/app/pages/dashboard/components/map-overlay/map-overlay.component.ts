@@ -35,8 +35,13 @@ export class MapOverlayComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges) {
     this.bikeActivitiesMetadata = (Array.from(this.bikeActivityMetadataMap.values()) as BikeActivityMetadataEnvelope[])
       .sort((a, b) => {
-        return a.bikeActivity.startTime.epochSecond - b.bikeActivity.startTime.epochSecond;
-      });
+        const dateA = new Date(0);
+        dateA.setUTCSeconds(a.bikeActivity.startTime.epochSecond);
+        const dateB = new Date(0);
+        dateB.setUTCSeconds(b.bikeActivity.startTime.epochSecond);
+
+        return dateA.getTime() - dateB.getTime();
+      }).reverse();
   }
 
   //
