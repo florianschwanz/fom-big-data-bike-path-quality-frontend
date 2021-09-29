@@ -18,5 +18,6 @@ export class MaterialIconService {
    */
   public initializeIcons(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
     iconRegistry.addSvgIcon('pedal_bike', sanitizer.bypassSecurityTrustResourceUrl('assets/icons/pedal_bike_black_24dp.svg'));
+    iconRegistry.addSvgIcon('science', sanitizer.bypassSecurityTrustResourceUrl('assets/icons/science_black_24dp.svg'));
   }
 }

@@ -26,14 +26,15 @@ export class BikeActivity {
    * Constructor
    */
   constructor(public uid: any,
-              public bikeType: any,
-              public phonePosition: any,
-              public smoothnessType: any,
+              public startTime: any,
+              public endTime: any,
               public trackingType: any,
               public uploadStatus: any,
-              public startTime: any,
               public surfaceType: any,
-              public endTime: any) {
+              public smoothnessType: any,
+              public phonePosition: any,
+              public bikeType: any,
+              public flaggedLabConditions: any) {
   }
 }
 

@@ -9,5 +9,9 @@
     <span class="endTime">{{ endTime }}</span>
     <span class="delimiter">·</span>
     <span class="samples">{{ bikeActivityMetadata.bikeActivitySamples }} samples</span>
+    <ng-container *ngIf="bikeActivityMetadata.bikeActivity.flaggedLabConditions == true">
+      <span class="delimiter">·</span>
+      <mat-icon svgIcon="science" class="science-icon"></mat-icon>
+    </ng-container>
   </div>
 </div>
