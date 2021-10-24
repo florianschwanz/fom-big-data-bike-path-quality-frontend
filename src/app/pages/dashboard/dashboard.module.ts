@@ -12,21 +12,23 @@ import {BikeActivityListItemComponent} from './components/bike-activity-list-ite
 import {MatIconModule} from '@angular/material/icon';
 import {MatRippleModule} from '@angular/material/core';
 import {ScrollingModule} from '@angular/cdk/scrolling';
+import {MatExpansionModule} from '@angular/material/expansion';
 
 @NgModule({
   declarations: [DashboardComponent, BikeActivityListComponent, BikeActivityListItemComponent],
-    imports: [
-        CommonModule,
-        DashboardRoutingModule,
-        MapModule,
-        MatButtonModule,
-        MatCardModule,
-        MatIconModule,
-        MatToolbarModule,
-        MatSlideToggleModule,
-        MatRippleModule,
-        ScrollingModule
-    ]
+  imports: [
+    CommonModule,
+    DashboardRoutingModule,
+    MapModule,
+    MatButtonModule,
+    MatCardModule,
+    MatExpansionModule,
+    MatIconModule,
+    MatToolbarModule,
+    MatSlideToggleModule,
+    MatRippleModule,
+    ScrollingModule
+  ]
 })
 
 export class DashboardModule {
