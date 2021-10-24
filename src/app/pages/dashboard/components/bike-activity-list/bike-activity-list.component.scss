@@ -1,5 +1,9 @@
 @import '../../../../../sizes';
 
+.mat-expansion-panel-body {
+  padding: 0 24px 16px !important;
+}
+
 .card-overlay, .accordion-overlay {
   z-index: 1;
   position: absolute;
@@ -8,8 +12,6 @@
   right: 0;
   margin: 30px;
   max-height: 100%;
-
-  padding: 0 !important;
 
   @media #{$breakpoint-large} {
     width: 450px;
