@@ -137,4 +137,10 @@ export class DashboardComponent implements OnInit {
     this.opacities.set(bikeActivityUid, 100.0);
     this.opacities = new Map(this.opacities);
   }
+
+  /**
+   * Handles click on activity surface type
+   */
+  onBikeActivitySurfaceTypeClicked(bikeActivitySurfaceType: string) {
+  }
 }

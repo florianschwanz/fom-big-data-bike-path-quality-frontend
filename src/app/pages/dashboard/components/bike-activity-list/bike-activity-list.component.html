@@ -1,5 +1,5 @@
-<mat-accordion class="accordion-overlay" multi>
-  <mat-expansion-panel expanded="true">
+<mat-accordion class="accordion-overlay">
+  <mat-expansion-panel [expanded]="expansionPanelStep === 0" (opened)="onExpansionPanelClicked(0)">
     <mat-expansion-panel-header>
       <mat-panel-title>
         Bike Activities
@@ -12,11 +12,14 @@
       </app-bike-activity-list-item>
     </cdk-virtual-scroll-viewport>
   </mat-expansion-panel>
-  <mat-expansion-panel>
+  <mat-expansion-panel [expanded]="expansionPanelStep === 1" (opened)="onExpansionPanelClicked(1)">
     <mat-expansion-panel-header>
       <mat-panel-title>
         Surface Types
       </mat-panel-title>
     </mat-expansion-panel-header>
+    <button mat-button *ngFor="let bikeActivitySurfaceType of bikeActivitySurfaceTypes" (click)="onActivitySurfaceTypeClicked(bikeActivitySurfaceType)">
+      {{ bikeActivitySurfaceType | uppercase}}
+    </button>
   </mat-expansion-panel>
 </mat-accordion>
