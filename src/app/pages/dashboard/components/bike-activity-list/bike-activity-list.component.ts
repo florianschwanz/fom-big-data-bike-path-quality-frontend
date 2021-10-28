@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges
 import {BikeActivityMetadataEnvelope} from '../../../../core/firebase/model/bike-activity-metadata-envelope.model';
 
 /**
- *  Displays bike activity list
+ * Displays bike activity list
  */
 @Component({
   selector: 'app-bike-activity-list',
@@ -17,7 +17,10 @@ export class BikeActivityListComponent implements OnInit, OnChanges {
   @Output() bikeActivityClickedEventEmitter = new EventEmitter<string>();
   /** Event emitter indicating a click on a surface type button */
   @Output() bikeActivitySurfaceTypeClickedEventEmitter = new EventEmitter<string>();
+  /** Event emitter indicating bike activities have been filtered */
+  @Output() bikeActivitiesFilteredEventEmitter = new EventEmitter<string[]>();
 
+  /** Expansion panel step currently active */
   expansionPanelStep = 0;
 
   /** List of bike activity metadata */
@@ -44,7 +47,6 @@ export class BikeActivityListComponent implements OnInit, OnChanges {
     this.initializeBikeActivitySurfaceTypes();
 
     this.bikeActivitySurfaceTypeClickedEventEmitter.subscribe(bikeActivitySurfaceType => {
-      console.log(`clicked ${bikeActivitySurfaceType}`);
       this.initializeBikeActivityMetadata(bikeActivitySurfaceType);
     });
   }
@@ -53,6 +55,11 @@ export class BikeActivityListComponent implements OnInit, OnChanges {
   // Initialization
   //
 
+  /**
+   * Initializes bike activity metadata
+   * @param filterSurfaceType
+   * @private
+   */
   private initializeBikeActivityMetadata(filterSurfaceType: string) {
     this.bikeActivitiesMetadata = (Array.from(this.bikeActivityMetadataMap.values()) as BikeActivityMetadataEnvelope[])
       .filter(bikeActivityMetadata => {
@@ -66,8 +73,18 @@ export class BikeActivityListComponent implements OnInit, OnChanges {
 
         return dateA.getTime() - dateB.getTime();
       }).reverse();
+
+    const bikeActivityMetadataIds = this.bikeActivitiesMetadata.map(bikeActivityMetadata => {
+      return bikeActivityMetadata.bikeActivity.uid;
+    });
+
+    this.bikeActivitiesFilteredEventEmitter.emit(bikeActivityMetadataIds);
   }
 
+  /**
+   * Initializes surface types
+   * @private
+   */
   private initializeBikeActivitySurfaceTypes() {
     const bikeActivitySurfaceTypesMap = new Map<string, string>();
 
@@ -95,10 +112,14 @@ export class BikeActivityListComponent implements OnInit, OnChanges {
    */
   onActivitySurfaceTypeClicked(bikeActivitySurfaceType: string) {
     this.bikeActivitySurfaceTypeClickedEventEmitter.emit(bikeActivitySurfaceType);
-    this.onExpansionPanelClicked(0);
+    this.onExpansionPanelOpened(0);
   }
 
-  onExpansionPanelClicked(expansionPanelStep: number) {
+  /**
+   * Handles opening of expansion panel step
+   * @param expansionPanelStep expansion panel step
+   */
+  onExpansionPanelOpened(expansionPanelStep: number) {
     this.expansionPanelStep = expansionPanelStep;
   }
 }

@@ -39,6 +39,9 @@ export class DashboardComponent implements OnInit {
   /** List of overlays to be displayed */
   overlays: Overlay[] = [];
 
+  /** IDs of bike activity metadata to display */
+  bikeActivityMetadataIds = [];
+
   /**
    * Constructor
    * @param firebaseCloudFirestoreService Firebase Cloud Firestore service
@@ -93,11 +96,25 @@ export class DashboardComponent implements OnInit {
     this.bikeActivityMetadataMap.set(bikeActivityId, bikeActivityMetadataEnvelope);
     this.bikeActivityMetadataMap = new Map(this.bikeActivityMetadataMap);
 
+    this.initializeOverlays();
+  }
+
+  private initializeOverlays() {
+    const overlaysMap = new Map<string, any>();
+    const opacitiesMap = new Map<string, number>();
+
     Array.from(this.bikeActivityMetadataMap.keys()).forEach(bikeActivityUid => {
-      this.overlays.push(new Overlay(`data/measurements/geojson/${bikeActivityUid}`, 'data/measurements/styles/style'));
-      this.opacities.set(bikeActivityUid, 0.0);
-      this.opacities = new Map(this.opacities);
-    });
+        overlaysMap.set(bikeActivityUid, new Overlay(`data/measurements/geojson/${bikeActivityUid}`, 'data/measurements/styles/style'));
+
+        if (this.bikeActivityMetadataIds.length === 0 || this.bikeActivityMetadataIds.includes(bikeActivityUid)) {
+          opacitiesMap.set(bikeActivityUid, this.initialOpacity);
+        } else {
+          opacitiesMap.set(bikeActivityUid, 0);
+        }
+      });
+
+    this.overlays = Array.from(overlaysMap.values());
+    this.opacities = new Map(opacitiesMap);
   }
 
   /**
@@ -142,5 +159,14 @@ export class DashboardComponent implements OnInit {
    * Handles click on activity surface type
    */
   onBikeActivitySurfaceTypeClicked(bikeActivitySurfaceType: string) {
+  }
+
+  /**
+   * Handles bike activity metadata IDs
+   * @param bikeActivityMetadataIds bike activity metadata IDs
+   */
+  onBikeActivitiesFiltered(bikeActivityMetadataIds: string[]) {
+    this.bikeActivityMetadataIds = bikeActivityMetadataIds;
+    this.initializeOverlays();
   }
 }
