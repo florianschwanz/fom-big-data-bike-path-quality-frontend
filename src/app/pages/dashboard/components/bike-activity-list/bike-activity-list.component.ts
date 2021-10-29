@@ -73,7 +73,8 @@ export class BikeActivityListComponent implements OnInit, OnChanges {
   private initializeBikeActivityMetadata() {
     this.bikeActivitiesMetadata = (Array.from(this.bikeActivityMetadataMap.values()) as BikeActivityMetadataEnvelope[])
       .filter(bikeActivityMetadata => {
-        return this.filterSurfaceType === null || this.filterSurfaceType === bikeActivityMetadata.bikeActivity.surfaceType;
+        return (this.filterSurfaceType === null || this.filterSurfaceType === bikeActivityMetadata.bikeActivity.surfaceType)
+          && (!this.filterLabConditions || bikeActivityMetadata.bikeActivity.flaggedLabConditions);
       })
       .sort((a, b) => {
         const dateA = new Date(0);
