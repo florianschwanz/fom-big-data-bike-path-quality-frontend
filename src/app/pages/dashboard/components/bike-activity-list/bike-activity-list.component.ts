@@ -17,6 +17,8 @@ export class BikeActivityListComponent implements OnInit, OnChanges {
   @Output() bikeActivityClickedEventEmitter = new EventEmitter<string>();
   /** Event emitter indicating a click on a surface type button */
   @Output() bikeActivitySurfaceTypeClickedEventEmitter = new EventEmitter<string>();
+  /** Event emitter indicating a click on lab conditions button */
+  @Output() labConditionClickedEventEmitter = new EventEmitter<boolean>();
   /** Event emitter indicating bike activities have been filtered */
   @Output() bikeActivitiesFilteredEventEmitter = new EventEmitter<string[]>();
 
@@ -27,6 +29,10 @@ export class BikeActivityListComponent implements OnInit, OnChanges {
   bikeActivitiesMetadata: BikeActivityMetadataEnvelope[] = [];
   /** List of bike activity surface types */
   bikeActivitySurfaceTypes: string[] = [];
+
+
+  filterSurfaceType = null;
+  filterLabConditions = false;
 
   //
   // Lifecycle hooks
@@ -43,12 +49,17 @@ export class BikeActivityListComponent implements OnInit, OnChanges {
    */
   ngOnChanges(changes: SimpleChanges) {
 
-    this.initializeBikeActivityMetadata(null);
+    this.initializeBikeActivityMetadata();
     this.initializeBikeActivitySurfaceTypes();
 
     this.bikeActivitySurfaceTypeClickedEventEmitter.subscribe(bikeActivitySurfaceType => {
-      this.initializeBikeActivityMetadata(bikeActivitySurfaceType);
+      this.filterSurfaceType = bikeActivitySurfaceType;
+      this.initializeBikeActivityMetadata();
     });
+    this.labConditionClickedEventEmitter.subscribe(labCondition => {
+      this.filterLabConditions = labCondition;
+      this.initializeBikeActivityMetadata();
+    })
   }
 
   //
@@ -57,13 +68,12 @@ export class BikeActivityListComponent implements OnInit, OnChanges {
 
   /**
    * Initializes bike activity metadata
-   * @param filterSurfaceType
    * @private
    */
-  private initializeBikeActivityMetadata(filterSurfaceType: string) {
+  private initializeBikeActivityMetadata() {
     this.bikeActivitiesMetadata = (Array.from(this.bikeActivityMetadataMap.values()) as BikeActivityMetadataEnvelope[])
       .filter(bikeActivityMetadata => {
-        return filterSurfaceType === null || filterSurfaceType === bikeActivityMetadata.bikeActivity.surfaceType;
+        return this.filterSurfaceType === null || this.filterSurfaceType === bikeActivityMetadata.bikeActivity.surfaceType;
       })
       .sort((a, b) => {
         const dateA = new Date(0);
@@ -112,6 +122,14 @@ export class BikeActivityListComponent implements OnInit, OnChanges {
    */
   onActivitySurfaceTypeClicked(bikeActivitySurfaceType: string) {
     this.bikeActivitySurfaceTypeClickedEventEmitter.emit(bikeActivitySurfaceType);
+    this.onExpansionPanelOpened(0);
+  }
+
+  /**
+   * Handles click on lab conditions button
+   */
+  onLabConditionsClicked(active: boolean) {
+    this.labConditionClickedEventEmitter.emit(active);
     this.onExpansionPanelOpened(0);
   }
 

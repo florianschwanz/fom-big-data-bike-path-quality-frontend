@@ -25,4 +25,18 @@
       {{ bikeActivitySurfaceType | uppercase}}
     </button>
   </mat-expansion-panel>
+  <mat-expansion-panel [expanded]="expansionPanelStep === 2" (opened)="onExpansionPanelOpened(2)">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Lab conditions
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <button mat-button (click)="onLabConditionsClicked(false)" [color]="filterLabConditions ? null : 'primary'">
+      ALL
+    </button>
+    <button mat-button (click)="onLabConditionsClicked(true)" [color]="filterLabConditions ? 'primary' : null">
+      <mat-icon>science</mat-icon>
+      LAB CONDITIONS
+    </button>
+  </mat-expansion-panel>
 </mat-accordion>
