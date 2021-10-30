@@ -1,4 +1,4 @@
-<mat-accordion class="accordion-overlay">
+<mat-accordion class="accordion-overlay" multi>
   <mat-expansion-panel [expanded]="expansionPanelStep === 0" (opened)="onExpansionPanelOpened(0)">
     <mat-expansion-panel-header>
       <mat-panel-title>
@@ -21,9 +21,19 @@
     <button mat-button (click)="onActivitySurfaceTypeClicked(null)">
       RESET
     </button>
-    <button mat-button *ngFor="let bikeActivitySurfaceType of bikeActivitySurfaceTypes" (click)="onActivitySurfaceTypeClicked(bikeActivitySurfaceType)">
-      {{ bikeActivitySurfaceType | uppercase}}
-    </button>
+    <ng-container *ngFor="let bikeActivitySurfaceType of bikeActivitySurfaceTypes">
+      <button *ngIf="bikeActivitySurfaceType === filterSurfaceType" mat-flat-button
+              color="primary"
+              (click)="onActivitySurfaceTypeClicked(bikeActivitySurfaceType)">
+        {{ bikeActivitySurfaceType | uppercase}}
+      </button>
+      <button *ngIf="bikeActivitySurfaceType !== filterSurfaceType" mat-button
+              (click)="onActivitySurfaceTypeClicked(bikeActivitySurfaceType)">
+        {{ bikeActivitySurfaceType | uppercase}}
+      </button>
+    </ng-container>
+
+
   </mat-expansion-panel>
   <mat-expansion-panel [expanded]="expansionPanelStep === 2" (opened)="onExpansionPanelOpened(2)">
     <mat-expansion-panel-header>
@@ -31,10 +41,17 @@
         Lab conditions
       </mat-panel-title>
     </mat-expansion-panel-header>
-    <button mat-button (click)="onLabConditionsClicked(false)" [color]="filterLabConditions ? null : 'primary'">
+    <button mat-button *ngIf="filterLabConditions" (click)="onLabConditionsClicked(false)">
       ALL
     </button>
-    <button mat-button (click)="onLabConditionsClicked(true)" [color]="filterLabConditions ? 'primary' : null">
+    <button mat-flat-button *ngIf="!filterLabConditions" color="primary" (click)="onLabConditionsClicked(false)">
+      ALL
+    </button>
+    <button mat-button *ngIf="!filterLabConditions" (click)="onLabConditionsClicked(true)">
+      <mat-icon>science</mat-icon>
+      LAB CONDITIONS
+    </button>
+    <button mat-flat-button *ngIf="filterLabConditions" color="primary" (click)="onLabConditionsClicked(true)">
       <mat-icon>science</mat-icon>
       LAB CONDITIONS
     </button>
