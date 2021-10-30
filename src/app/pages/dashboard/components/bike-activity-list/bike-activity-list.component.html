@@ -2,7 +2,7 @@
   <mat-expansion-panel [expanded]="expansionPanelStep === 0" (opened)="onExpansionPanelOpened(0)">
     <mat-expansion-panel-header>
       <mat-panel-title>
-        Bike Activities
+        Bike Activities ({{ bikeActivitiesMetadata.length }})
       </mat-panel-title>
     </mat-expansion-panel-header>
     <cdk-virtual-scroll-viewport itemSize="60px" class="bike-activities-metadata-list">
@@ -16,6 +16,7 @@
     <mat-expansion-panel-header>
       <mat-panel-title>
         Surface Types
+        <span *ngIf="filterSurfaceType != null" class="filtered"> (filtered)</span>
       </mat-panel-title>
     </mat-expansion-panel-header>
     <button mat-button (click)="onActivitySurfaceTypeClicked(null)">
@@ -32,13 +33,12 @@
         {{ bikeActivitySurfaceType | uppercase}}
       </button>
     </ng-container>
-
-
   </mat-expansion-panel>
   <mat-expansion-panel [expanded]="expansionPanelStep === 2" (opened)="onExpansionPanelOpened(2)">
     <mat-expansion-panel-header>
       <mat-panel-title>
         Lab conditions
+        <span *ngIf="filterLabConditions" class="filtered"> (filtered)</span>
       </mat-panel-title>
     </mat-expansion-panel-header>
     <button mat-button *ngIf="filterLabConditions" (click)="onLabConditionsClicked(false)">
