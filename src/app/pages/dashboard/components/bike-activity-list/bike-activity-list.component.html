@@ -37,6 +37,28 @@
   <mat-expansion-panel [expanded]="expansionPanelStep === 2" (opened)="onExpansionPanelOpened(2)">
     <mat-expansion-panel-header>
       <mat-panel-title>
+        User ID
+        <span *ngIf="filterUserId != null" class="filtered"> (filtered)</span>
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <button mat-button (click)="onUserIdClicked(null)">
+      RESET
+    </button>
+    <ng-container *ngFor="let userId of userIds">
+      <button *ngIf="userId === filterUserId" mat-flat-button
+              color="primary"
+              (click)="onUserIdClicked(userId)">
+        {{ userId }}
+      </button>
+      <button *ngIf="userId !== filterUserId" mat-button
+              (click)="onUserIdClicked(userId)">
+        {{ userId }}
+      </button>
+    </ng-container>
+  </mat-expansion-panel>
+  <mat-expansion-panel [expanded]="expansionPanelStep === 3" (opened)="onExpansionPanelOpened(3)">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
         Lab conditions
         <span *ngIf="filterLabConditions" class="filtered"> (filtered)</span>
       </mat-panel-title>

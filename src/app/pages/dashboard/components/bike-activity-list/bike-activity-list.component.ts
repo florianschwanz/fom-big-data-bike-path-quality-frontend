@@ -17,6 +17,8 @@ export class BikeActivityListComponent implements OnInit, OnChanges {
   @Output() bikeActivityClickedEventEmitter = new EventEmitter<string>();
   /** Event emitter indicating a click on a surface type button */
   @Output() bikeActivitySurfaceTypeClickedEventEmitter = new EventEmitter<string>();
+  /** Event emitter indicating a click on a user ID button */
+  @Output() bikeActivityUserIdClickedEventEmitter = new EventEmitter<string>();
   /** Event emitter indicating a click on lab conditions button */
   @Output() labConditionClickedEventEmitter = new EventEmitter<boolean>();
   /** Event emitter indicating bike activities have been filtered */
@@ -29,9 +31,14 @@ export class BikeActivityListComponent implements OnInit, OnChanges {
   bikeActivitiesMetadata: BikeActivityMetadataEnvelope[] = [];
   /** List of bike activity surface types */
   bikeActivitySurfaceTypes: string[] = [];
+  /** List of user IDs */
+  userIds: string[] = [];
 
-
+  /** Filter value for surface type */
   filterSurfaceType = null;
+  /** Filter value for user ID */
+  filterUserId = null;
+  /** Filter value for lab conditions */
   filterLabConditions = false;
 
   //
@@ -56,6 +63,10 @@ export class BikeActivityListComponent implements OnInit, OnChanges {
       this.filterSurfaceType = bikeActivitySurfaceType;
       this.initializeBikeActivityMetadata();
     });
+    this.bikeActivityUserIdClickedEventEmitter.subscribe(userId => {
+      this.filterUserId = userId;
+      this.initializeBikeActivityMetadata();
+    });
     this.labConditionClickedEventEmitter.subscribe(labCondition => {
       this.filterLabConditions = labCondition;
       this.initializeBikeActivityMetadata();
@@ -74,6 +85,7 @@ export class BikeActivityListComponent implements OnInit, OnChanges {
     this.bikeActivitiesMetadata = (Array.from(this.bikeActivityMetadataMap.values()) as BikeActivityMetadataEnvelope[])
       .filter(bikeActivityMetadata => {
         return (this.filterSurfaceType === null || this.filterSurfaceType === bikeActivityMetadata.bikeActivity.surfaceType)
+          && (this.filterUserId === null || this.filterUserId === bikeActivityMetadata.userData.uid)
           && (!this.filterLabConditions || bikeActivityMetadata.bikeActivity.flaggedLabConditions);
       })
       .sort((a, b) => {
@@ -98,12 +110,19 @@ export class BikeActivityListComponent implements OnInit, OnChanges {
    */
   private initializeBikeActivitySurfaceTypes() {
     const bikeActivitySurfaceTypesMap = new Map<string, string>();
+    const userIdsMap = new Map<string, string>();
 
     (Array.from(this.bikeActivityMetadataMap.values()) as BikeActivityMetadataEnvelope[]).forEach(bikeActivityMetadata => {
       const surfaceType = bikeActivityMetadata.bikeActivity.surfaceType;
       bikeActivitySurfaceTypesMap.set(surfaceType, surfaceType);
     });
     this.bikeActivitySurfaceTypes = Array.from(bikeActivitySurfaceTypesMap.values());
+
+    (Array.from(this.bikeActivityMetadataMap.values()) as BikeActivityMetadataEnvelope[]).forEach(bikeActivityMetadata => {
+      const userId = bikeActivityMetadata.userData.uid;
+      userIdsMap.set(userId, userId);
+    });
+    this.userIds = Array.from(userIdsMap.values());
   }
 
   //
@@ -123,6 +142,15 @@ export class BikeActivityListComponent implements OnInit, OnChanges {
    */
   onActivitySurfaceTypeClicked(bikeActivitySurfaceType: string) {
     this.bikeActivitySurfaceTypeClickedEventEmitter.emit(bikeActivitySurfaceType);
+    this.onExpansionPanelOpened(0);
+  }
+
+  /**
+   * Handles click on user ID
+   * @param userId user ID
+   */
+  onUserIdClicked(userId: string) {
+    this.bikeActivityUserIdClickedEventEmitter.emit(userId);
     this.onExpansionPanelOpened(0);
   }
 
