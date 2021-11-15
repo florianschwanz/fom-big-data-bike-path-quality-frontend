@@ -1,0 +1,9 @@
+<mat-card class="card-overlay">
+  <mat-card-subtitle class="card-subtitle">Bike Activities</mat-card-subtitle>
+  <cdk-virtual-scroll-viewport itemSize="60px" class="bike-activities-metadata-list">
+    <app-bike-activity-list-item *cdkVirtualFor="let bikeActivityMetadata of bikeActivitiesMetadata"
+                                 [bikeActivityMetadata]="bikeActivityMetadata"
+                                 (bikeActivityClickedEventEmitter)="onBikeActivityClicked($event)">
+    </app-bike-activity-list-item>
+  </cdk-virtual-scroll-viewport>
+</mat-card>

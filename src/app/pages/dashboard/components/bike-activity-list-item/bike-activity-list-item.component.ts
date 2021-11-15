@@ -2,14 +2,14 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {BikeActivityMetadataEnvelope} from '../../../../core/firebase/model/bike-activity-metadata-envelope.model';
 
 /**
- * Displays bike activity metadata
+ * Displays bike activity list item
  */
 @Component({
-  selector: 'app-bike-activity-metadata',
-  templateUrl: './bike-activity-metadata.component.html',
-  styleUrls: ['./bike-activity-metadata.component.scss']
+  selector: 'app-bike-activity-list-item',
+  templateUrl: './bike-activity-list-item.component.html',
+  styleUrls: ['./bike-activity-list-item.component.scss']
 })
-export class BikeActivityMetadataComponent implements OnInit {
+export class BikeActivityListItemComponent implements OnInit {
 
   /** Bike activity metadata */
   @Input() bikeActivityMetadata: BikeActivityMetadataEnvelope;
@@ -66,8 +66,8 @@ export class BikeActivityMetadataComponent implements OnInit {
    * Handles on-init phase
    */
   ngOnInit() {
-    this.startTime = BikeActivityMetadataComponent.getDateLong(this.bikeActivityMetadata.bikeActivity.startTime.epochSecond);
-    this.endTime = BikeActivityMetadataComponent.getDateShort(this.bikeActivityMetadata.bikeActivity.endTime.epochSecond);
+    this.startTime = BikeActivityListItemComponent.getDateLong(this.bikeActivityMetadata.bikeActivity.startTime.epochSecond);
+    this.endTime = BikeActivityListItemComponent.getDateShort(this.bikeActivityMetadata.bikeActivity.endTime.epochSecond);
   }
 
   //

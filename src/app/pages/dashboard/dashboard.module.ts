@@ -7,14 +7,14 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatButtonModule} from '@angular/material/button';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatCardModule} from '@angular/material/card';
-import {MapOverlayComponent} from './components/map-overlay/map-overlay.component';
-import {BikeActivityMetadataComponent} from './components/bike-activity-metadata/bike-activity-metadata.component';
+import {BikeActivityListComponent} from './components/bike-activity-list/bike-activity-list.component';
+import {BikeActivityListItemComponent} from './components/bike-activity-list-item/bike-activity-list-item.component';
 import {MatIconModule} from '@angular/material/icon';
 import {MatRippleModule} from '@angular/material/core';
 import {ScrollingModule} from '@angular/cdk/scrolling';
 
 @NgModule({
-  declarations: [DashboardComponent, MapOverlayComponent, BikeActivityMetadataComponent],
+  declarations: [DashboardComponent, BikeActivityListComponent, BikeActivityListItemComponent],
     imports: [
         CommonModule,
         DashboardRoutingModule,

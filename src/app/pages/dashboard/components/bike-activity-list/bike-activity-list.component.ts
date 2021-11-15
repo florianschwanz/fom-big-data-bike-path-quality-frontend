@@ -2,14 +2,14 @@ import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges
 import {BikeActivityMetadataEnvelope} from '../../../../core/firebase/model/bike-activity-metadata-envelope.model';
 
 /**
- * Displays map overlay
+ *  Displays bike activity list
  */
 @Component({
-  selector: 'app-map-overlay',
-  templateUrl: './map-overlay.component.html',
-  styleUrls: ['./map-overlay.component.scss']
+  selector: 'app-bike-activity-list',
+  templateUrl: './bike-activity-list.component.html',
+  styleUrls: ['./bike-activity-list.component.scss']
 })
-export class MapOverlayComponent implements OnInit, OnChanges {
+export class BikeActivityListComponent implements OnInit, OnChanges {
 
   /** Map of bike activity metadata */
   @Input() bikeActivityMetadataMap = new Map<string, BikeActivityMetadataEnvelope>();

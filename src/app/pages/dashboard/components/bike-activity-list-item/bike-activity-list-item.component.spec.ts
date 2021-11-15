@@ -1,20 +1,20 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {BikeActivityMetadataComponent} from './bike-activity-metadata.component';
+import {BikeActivityListItemComponent} from './bike-activity-list-item.component';
 
 describe('BikeAcvtivityComponent', () => {
-  let component: BikeActivityMetadataComponent;
-  let fixture: ComponentFixture<BikeActivityMetadataComponent>;
+  let component: BikeActivityListItemComponent;
+  let fixture: ComponentFixture<BikeActivityListItemComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ BikeActivityMetadataComponent ]
+      declarations: [ BikeActivityListItemComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(BikeActivityMetadataComponent);
+    fixture = TestBed.createComponent(BikeActivityListItemComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
