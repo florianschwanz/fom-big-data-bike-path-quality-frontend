@@ -99,6 +99,9 @@ export class DashboardComponent implements OnInit {
     this.initializeOverlays();
   }
 
+  /**
+   * Initializes overlays
+   */
   private initializeOverlays() {
     const overlaysMap = new Map<string, any>();
     const opacitiesMap = new Map<string, number>();

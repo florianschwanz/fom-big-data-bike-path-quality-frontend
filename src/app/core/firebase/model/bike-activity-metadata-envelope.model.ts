@@ -23,7 +23,17 @@ export class BikeActivityMetadataEnvelope {
 export class BikeActivity {
 
   /**
-   * Constructor
+   * COnstructor
+   * @param uid id
+   * @param startTime start time
+   * @param endTime end time
+   * @param trackingType tracking type
+   * @param uploadStatus upload status
+   * @param surfaceType surface type
+   * @param smoothnessType smoothness type
+   * @param phonePosition phone position
+   * @param bikeType bike type
+   * @param flaggedLabConditions flagged lab conditions
    */
   constructor(public uid: any,
               public startTime: any,
@@ -43,6 +53,17 @@ export class BikeActivity {
  */
 export class LatLngBounds {
 
+  /**
+   * Constructor
+   * @param center center
+   * @param emptySpan empty span
+   * @param latNorth latitude North
+   * @param latSouth latitude South
+   * @param latitudeSpan latitude span
+   * @param lonEast longitude East
+   * @param lonWest longitude West
+   * @param longitudeSpan longitude span
+   */
   constructor(public center: LatLng,
               public emptySpan: boolean,
               public latNorth: number,
@@ -54,8 +75,16 @@ export class LatLngBounds {
   }
 }
 
+/**
+ * Represents lat/lon
+ */
 export class LatLng {
 
+  /**
+   * Constructor
+   * @param latitude latitude
+   * @param longitude longitude
+   */
   constructor(public latitude, public longitude) {
   }
 }
@@ -67,6 +96,8 @@ export class UserData {
 
   /**
    * Constructor
+   * @param startTime start time
+   * @param uid id
    */
   constructor(public startTime: any,
               public uid: any) {
