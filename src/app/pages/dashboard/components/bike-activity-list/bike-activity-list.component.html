@@ -45,6 +45,7 @@
       RESET
     </button>
     <ng-container *ngFor="let userId of userIds">
+      <ng-container *ngIf="isString(userId)">
       <button *ngIf="userId === filterUserId" mat-flat-button
               color="primary"
               (click)="onUserIdClicked(userId)">
@@ -54,6 +55,7 @@
               (click)="onUserIdClicked(userId)">
         {{ userId }}
       </button>
+      </ng-container>
     </ng-container>
   </mat-expansion-panel>
   <mat-expansion-panel [expanded]="expansionPanelStep === 3" (opened)="onExpansionPanelOpened(3)">

@@ -169,4 +169,12 @@ export class BikeActivityListComponent implements OnInit, OnChanges {
   onExpansionPanelOpened(expansionPanelStep: number) {
     this.expansionPanelStep = expansionPanelStep;
   }
+
+  //
+  // Helpers
+  //
+
+  isString(userId: any) {
+    return typeof userId === 'string' || userId instanceof String;
+  }
 }
