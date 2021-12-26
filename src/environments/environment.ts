@@ -3,6 +3,17 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
+  firebase: {
+    projectId: 'bike-path-quality',
+    appId: '1:974335716794:web:f3eb2f483c08c9ee098183',
+    databaseURL: 'https://bike-path-quality-default-rtdb.europe-west1.firebasedatabase.app',
+    storageBucket: 'bike-path-quality.appspot.com',
+    locationId: 'europe-west',
+    apiKey: 'AIzaSyCz3vjBS8vMfrWsyDaJm-9f6Df1cVzzfpg',
+    authDomain: 'bike-path-quality.firebaseapp.com',
+    messagingSenderId: '974335716794',
+    measurementId: 'G-19Q008GNYV',
+  },
   production: false,
   firebaseConfig: {
     apiKey: 'AIzaSyCz3vjBS8vMfrWsyDaJm-9f6Df1cVzzfpg',

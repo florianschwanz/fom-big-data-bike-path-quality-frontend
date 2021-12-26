@@ -1,9 +1,10 @@
 import {Injectable} from '@angular/core';
-import {AngularFireStorage} from '@angular/fire/storage';
 import {Subject} from 'rxjs';
-import {ListResult} from '@angular/fire/storage/interfaces';
 import {HttpClient} from '@angular/common/http';
 import {Result} from '../model/result.model';
+import firebase from "firebase";
+import ListResult = firebase.storage.ListResult;
+import {AngularFireStorage} from "@angular/fire/compat/storage";
 
 /**
  * Handles Storage access

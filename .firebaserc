@@ -1,5 +1,14 @@
 {
   "projects": {
     "default": "bike-path-quality"
+  },
+  "targets": {
+    "bike-path-quality": {
+      "hosting": {
+        "fom-big-data-bike-path-quality-frontend": [
+          "bike-path-quality"
+        ]
+      }
+    }
   }
 }

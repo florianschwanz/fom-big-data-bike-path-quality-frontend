@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
-import {AngularFirestore} from '@angular/fire/firestore';
 import {Subject} from 'rxjs';
 import {map, takeUntil} from 'rxjs/operators';
 import {Result} from '../model/result.model';
+import {AngularFirestore} from "@angular/fire/compat/firestore";
 
 /**
  * Handles Cloud Firestore access
@@ -40,7 +40,7 @@ export class FirebaseCloudFirestoreService {
   readResults() {
     this.angularFirestore.collection<any>('measurements').snapshotChanges().pipe(
       map(actions => actions.map(a => {
-        return new Result(a.payload.doc.id, a.payload.doc.data() as any);
+        return new Result(a.payload.doc["id"], a.payload.doc.data() as any);
       }))
     ).pipe(
       takeUntil(this.unsubscribeSubject)

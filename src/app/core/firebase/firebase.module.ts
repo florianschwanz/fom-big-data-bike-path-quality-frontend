@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {AngularFirestoreModule} from '@angular/fire/firestore';
 import {FirebaseCloudFirestoreService} from './services/firebase-cloud-firestore.service';
+import {AngularFirestoreModule} from "@angular/fire/compat/firestore";
 
 
 @NgModule({

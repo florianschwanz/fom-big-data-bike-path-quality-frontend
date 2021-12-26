@@ -123,6 +123,16 @@
               "devServerTarget": "fom-big-data-bike-path-quality-frontend:serve:production"
             }
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "prerender": false,
+            "ssr": false,
+            "browserTarget": "fom-big-data-bike-path-quality-frontend:build:production",
+            "firebaseProject": "bike-path-quality",
+            "firebaseHostingSite": "bike-path-quality"
+          }
         }
       }
     }
