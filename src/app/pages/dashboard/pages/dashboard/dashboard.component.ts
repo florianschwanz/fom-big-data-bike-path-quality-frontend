@@ -20,7 +20,7 @@ import {BoundingBox} from '../../../../ui/map/model/bounding-box.model';
 export class DashboardComponent implements OnInit {
 
   /** Height of the map */
-  mapHeight = '100vh';
+  mapHeight = 'calc(100vh - 64px)';
 
   /** Enum representing places */
   placeEnum = Place;

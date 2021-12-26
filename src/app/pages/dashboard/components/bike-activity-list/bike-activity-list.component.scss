@@ -7,11 +7,11 @@
 .card-overlay, .accordion-overlay {
   z-index: 1;
   position: absolute;
-  top: 0;
+  top: 64px;
   left: 0;
   right: 0;
   margin: 30px;
-  max-height: 100%;
+  max-height: calc(100vh - 128px);
 
   @media #{$breakpoint-large} {
     width: 450px;
@@ -23,7 +23,7 @@
 }
 
 .bike-activities-metadata-list {
-  height: 450px;
+  height: 300px;
 }
 
 .filtered {

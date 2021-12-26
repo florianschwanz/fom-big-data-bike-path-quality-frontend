@@ -1,4 +1,8 @@
+@use '~@angular/material' as mat;
+
+@import '../../../../../styles';
 @import '../../../../../theme';
+
 
 .container {
   cursor: pointer;
@@ -11,14 +15,14 @@
 }
 
 .subtitle {
-  color: mat-color($mat-grey, 500);
+  color: mat.get-color-from-palette(mat.$grey-palette, 500);
 }
 
 .bike-icon, .science-icon {
   vertical-align: text-top;
 
   ::ng-deep svg {
-    fill: mat-color($mat-grey, 500);
+    fill: mat.get-color-from-palette(mat.$grey-palette, 500);
 
     height: 60%;
     width: 60%;
