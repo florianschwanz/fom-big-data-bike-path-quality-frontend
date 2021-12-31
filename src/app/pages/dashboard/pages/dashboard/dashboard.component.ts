@@ -32,12 +32,15 @@ export class DashboardComponent implements OnInit {
 
   /** Fly-to bounding box */
   flyToBoundingBox: BoundingBox;
-  /** Opacities */
-  opacities = new Map<string, number>();
+  /** Geocoder filter */
+  geocoderFilter = [["Deutschland", "Berlin"]];
+
   /** Initial opacity */
   initialOpacity = 25;
   /** List of overlays to be displayed */
-  overlays: Overlay[] = [];
+  results: string[] = [];
+  /** Opacities */
+  opacities = new Map<string, number>();
 
   /** IDs of bike activity metadata to display */
   bikeActivityMetadataIds = [];
@@ -107,7 +110,7 @@ export class DashboardComponent implements OnInit {
     const opacitiesMap = new Map<string, number>();
 
     Array.from(this.bikeActivityMetadataMap.keys()).forEach(bikeActivityUid => {
-        overlaysMap.set(bikeActivityUid, new Overlay(`data/measurements/geojson/${bikeActivityUid}`, 'data/measurements/styles/style'));
+        overlaysMap.set(bikeActivityUid, bikeActivityUid);
 
         if (this.bikeActivityMetadataIds.length === 0 || this.bikeActivityMetadataIds.includes(bikeActivityUid)) {
           opacitiesMap.set(bikeActivityUid, this.initialOpacity);
@@ -116,7 +119,7 @@ export class DashboardComponent implements OnInit {
         }
       });
 
-    this.overlays = Array.from(overlaysMap.values());
+    this.results = Array.from(overlaysMap.values());
     this.opacities = new Map(opacitiesMap);
   }
 

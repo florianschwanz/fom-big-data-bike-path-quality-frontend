@@ -3,11 +3,13 @@
          [style]="mapBoxStyleEnum.LIGHT_V10"
          [zoom]="10.0"
          [center]="placeEnum.BRANDENBURG_GATE"
+         [geocoderEnabled]="true"
+         [geocoderFilter]=geocoderFilter
          [interactiveEnabled]=true
          [flyToBoundingBox]="flyToBoundingBox"
          [opacities]="opacities"
          [initialOpacity]=initialOpacity
-         [overlays]="overlays">
+         [results]="results">
 </app-map>
 
 <app-bike-activity-list [bikeActivityMetadataMap]="bikeActivityMetadataMap"
